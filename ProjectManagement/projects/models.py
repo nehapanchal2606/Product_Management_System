@@ -39,6 +39,7 @@ class Project(models.Model):
     team = models.ForeignKey(Team, on_delete=models.CASCADE, related_name="projects", default=1)
     name = models.CharField(max_length=255)
     description = models.TextField(blank=True, null=True)
+    client_company = models.CharField(max_length=100,null=True, blank=True)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='To Do')
     priority = models.CharField(max_length=20, choices=PRIORITY_CHOICES, default='Medium')
     start_date = models.DateField()

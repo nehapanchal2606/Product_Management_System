@@ -1,18 +1,82 @@
 {% extends "base.html" %}
-
+{% load crispy_forms_tags %}
 
 {% block content %}
-
+    <form method="POST" action=".">
+    {% csrf_token %}
     <div class="row">
         <div class="col-md-6">
-          {{ form.as_p }}
+          {% comment %} {{ form.as_p }} {% endcomment %}
+          <div class="card card-primary">
+            <div class="card-header">
+              <h3 class="card-title">General</h3>
+
+              <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                  <i class="fas fa-minus"></i>
+                </button>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="form-group">
+                <label for="inputName">Project Name</label>
+                {{ form.name | as_crispy_field }}
+              </div>
+              <div class="form-group">
+                <label for="inputName">Project Owner</label>
+                {{ form.owner | as_crispy_field}}
+              </div>
+              <div class="form-group">
+                <label for="inputDescription">Project Description</label>
+                {{ form.description | as_crispy_field }}
+              </div>
+
+              <div class="form-group">
+                <label for="inputStatus">Client Company</label>
+                {{ form.client_company| as_crispy_field }}
+              </div>
+
+              <div class="form-group">
+                <label for="inputDescription">Project Team</label>
+                {{ form.team | as_crispy_field }}
+              </div>
+
+              <div class="form-group">
+                <label for="inputStatus">Status</label>
+                {{ form.status | as_crispy_field }}
+              </div>
+
+               <div class="form-group">
+                <label for="inputStatus">Priority</label>
+                {{ form.priority | as_crispy_field }}
+              </div>
+              {% comment %} <div class="form-group">
+                <label for="inputClientCompany">Client Company</label>
+                <input type="text" id="inputClientCompany" class="form-control">
+              </div> {% endcomment %}
+              <div class="form-group">
+                <label for="inputProjectLeader">Start Date</label>
+                {{ form.start_date | as_crispy_field }}
+              </div>
+
+              <div class="form-group">
+                <label for="inputProjectLeader">Due Date</label>
+                {{ form.due_date | as_crispy_field }}
+              </div>
+
+
+            </div>
+            <!-- /.card-body -->
+          </div>
+          <!-- /.card -->
         </div>
-      </div>
-      <div class="row">
+    </div>
+    <div class="row">
         <div class="col-12">
           <a href="#" class="btn btn-secondary">Cancel</a>
           <input type="submit" value="Create new Project" class="btn btn-success float-right">
         </div>
-      </div>
+    </div>
+    </form>
 
 {% endblock %}
