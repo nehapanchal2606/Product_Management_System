@@ -1,10 +1,18 @@
-📦 Product Management System
+### Installation
 
-A simple and efficient Django-based web application to manage products.
+Clone the repo and install dependencies:
 
+```bash
+git clone https://github.com/nehapanchal2606/Product_Management_System.git
+cd Product_Management_System/ProjectManagement
+pip install -r requirements.txt
+python manage.py runserver
 
-🚀 Features
-- Add, update, and delete products
-- View all products in a list/table
-- Search and filter functionality
-- User-friendly interface
+---
+
+### 🔹 How it will look on GitHub:
+````bash
+git clone https://github.com/nehapanchal2606/Product_Management_System.git
+cd Product_Management_System/ProjectManagement
+pip install -r requirements.txt
+python manage.py runserver
