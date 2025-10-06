@@ -3,7 +3,7 @@ from django.views.generic import View
 from projects.models import Project
 from tasks.models import Task
 from accounts.models import Profile
-from notifications.models import Notification
+# from notifications.models import Notification
 from teams.models import Team
 
 # Create your views here.
@@ -24,9 +24,10 @@ class DashboardView(View):
         print("Memebers : ", latest_members)
         context = {}
         if request.user.is_authenticated:
-            latest_notification = Notification.objects.for_user(request.user)
+            latest_notification = request.user.notifications.unread()
             context['notification_count'] = latest_notification.count()
             context['latest_notification'] = latest_notification[:3]
+            
         context['latest_project'] = latest_project[:5]
         context['latest_project_count'] = latest_project.count()
         context['latest_tasks'] = latest_tasks[:5]
@@ -34,6 +35,7 @@ class DashboardView(View):
         context['latest_members'] = latest_members
         context['latest_members_count'] = latest_members.count()
         context['team_count'] = latest_teams.count()
+        context['header_text'] = "Dashboard"
         return render(request, "accounts/dashboard.html", context)
     
 

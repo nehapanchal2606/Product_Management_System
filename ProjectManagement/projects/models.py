@@ -3,20 +3,9 @@ import uuid
 from django.utils import timezone
 from django.contrib.auth.models import User
 from teams.models import Team
+from projects.utils import STATUS_CHOICES, PRIORITY_CHOICES
 
 # Create your models here.
-
-STATUS_CHOICES = [
-    ('To Do','To Do'),
-    ('In Progress','In Progress'),
-    ('Completed','Completed')
-]
-
-PRIORITY_CHOICES = [
-    ('Low','Low'),
-    ('Medium','Medium'),
-    ('High','High')
-]
 
 class ProjectQueryset(models.QuerySet):
     def active(self):
@@ -42,6 +31,13 @@ class Project(models.Model):
     client_company = models.CharField(max_length=100,null=True, blank=True)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='To Do')
     priority = models.CharField(max_length=20, choices=PRIORITY_CHOICES, default='Medium')
+
+
+    # bidget detail here
+    total_amount = models.DecimalField(max_digits=12, decimal_places=2, blank=True, null=True)
+    amount_spent = models.DecimalField(max_digits=12, decimal_places=2, default=0.00,blank=True, null=True)
+    estimated_duration = models.IntegerField(blank=True, null=True, help_text="Estimated duration in days")
+
     start_date = models.DateField()
     due_date = models.DateField()
     active = models.BooleanField(default=True)

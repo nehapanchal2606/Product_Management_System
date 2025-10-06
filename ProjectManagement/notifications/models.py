@@ -5,14 +5,14 @@ from django.contrib.contenttypes.fields import GenericForeignKey
 # Create your models here.
 
 class NotificationManager(models.Manager):
-    def for_user(self,user):
-        return self.filter(receipient=user)
+    # def for_user(self,user):
+    #     return self.filter(receipient=user)
     
-    def unread(self, user):
-        return self.for_user(user).filter(read=False)
+    def unread(self):
+        return self.filter(read=False)
     
-    def read(self, user):
-        return self.for_user(user).filter(read=True)
+    def read(self):
+        return self.filter(read=True)
 
 
 class Notification(models.Model):
@@ -36,3 +36,5 @@ class Notification(models.Model):
     @property
     def notification_time_formatted(self):
         return self.create_at.strftime('%d %b %I:%M %p')
+
+
