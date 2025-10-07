@@ -34,3 +34,23 @@ def create_notification(actor_username, verb, object_id):
         return None
     except ContentType.DoesNotExist:
         return None
+
+
+
+@shared_task
+def notify_teams_due_projects_tasks():
+    project_due_soon = Project.objects.due_in_two_days_or_less()
+
+    for project in project_due_soon:
+        verb = f"Reminder: The Project {project.name} is due soon!"
+        actor_username = project.owner.username
+
+        members = project.team.members.all()
+
+        for member in members:
+            create_notification.delay(
+                actor_username=actor_username,
+                verb=verb,
+                object_id=project.id
+                
+            )

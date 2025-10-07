@@ -26,6 +26,9 @@ class ProjectManager(models.Manager):
     
     def all(self):
         return self.get_queryset().active().upcoming()
+    
+    def due_in_two_days_or_less(self):
+        return self.get_queryset().active().upcoming().due_in_two_days_or_less()
 
 
 class Project(models.Model):
