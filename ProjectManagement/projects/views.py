@@ -3,7 +3,10 @@ from projects.models import Project
 from django.views.generic import CreateView
 from projects.forms import ProjectForm
 from django.urls import reverse_lazy
-# from notifications.models import Notification
+
+from notifications.tasks import create_notification
+from django.contrib.contenttypes.models import ContentType
+
 # Create your views here.
 
 class ProjectCreateView(CreateView):
@@ -16,6 +19,17 @@ class ProjectCreateView(CreateView):
         project = form.save(commit=False)
         project.owner = self.request.user
         project.save()
+
+        # send notification 
+        actor_username = self.request.user.username
+        verb = f"New Project Assignment, {project.name}"
+        object_id = project.id
+
+        create_notification.delay(
+            actor_username=actor_username, 
+            verb=verb,
+            object_id=object_id)
+
         return redirect(self.success_url)
     
     def get_context_data(self, **kwargs):

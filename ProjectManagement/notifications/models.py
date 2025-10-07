@@ -22,7 +22,7 @@ class Notification(models.Model):
     content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
     object_id = models.CharField(max_length=36)
     content_object = GenericForeignKey('content_type', 'object_id')
-    create_at = models.DateTimeField()
+    create_at = models.DateTimeField(auto_now_add=True)
     read = models.BooleanField(default=False)
 
     objects = NotificationManager()
