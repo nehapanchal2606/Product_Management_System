@@ -30,8 +30,8 @@ class DashboardView(View):
             
         context['latest_project'] = latest_project[:5]
         context['latest_project_count'] = latest_project.count()
-        context['latest_tasks'] = latest_tasks[:5]
-        context['latest_tasks_count'] = latest_tasks.count()
+        context['projects_near_due_date'] = latest_project.due_in_two_days_or_less()[:5]
+        # context['latest_tasks_count'] = latest_tasks.count()
         context['latest_members'] = latest_members
         context['latest_members_count'] = latest_members.count()
         context['team_count'] = latest_teams.count()
