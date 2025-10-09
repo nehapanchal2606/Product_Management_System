@@ -5,6 +5,7 @@ from tasks.models import Task
 from accounts.models import Profile
 # from notifications.models import Notification
 from teams.models import Team
+# from django.contrib.auth.mixins import LoginRequiredMixin
 
 # Create your views here.
 
@@ -23,10 +24,10 @@ class DashboardView(View):
 
         print("Memebers : ", latest_members)
         context = {}
-        if request.user.is_authenticated:
-            latest_notification = request.user.notifications.unread()
-            context['notification_count'] = latest_notification.count()
-            context['latest_notification'] = latest_notification[:3]
+        # if request.user.is_authenticated:
+        latest_notification = request.user.notifications.unread()
+        context['notification_count'] = latest_notification.count()
+        context['latest_notification'] = latest_notification[:3]
             
         context['latest_project'] = latest_project[:5]
         context['latest_project_count'] = latest_project.count()

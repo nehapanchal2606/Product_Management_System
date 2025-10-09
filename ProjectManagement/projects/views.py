@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from projects.models import Project
-from django.views.generic import CreateView
+from django.views.generic import CreateView, ListView
 from projects.forms import ProjectForm
 from django.urls import reverse_lazy
 
@@ -39,9 +39,13 @@ class ProjectCreateView(CreateView):
             context = super(ProjectCreateView, self).get_context_data(**kwargs)
             context['notification_count'] = latest_notification.count()
             context['latest_notification'] = latest_notification[:3]
-            context['header_text'] = "Dashboard"
-            return context
+        context['header_text'] = "Dashboard"
+        return context
 
 
+class ProjectListView(ListView):
+    model = Project
+    context_object_name = "projects"
+    template_name = 'project/project_list.html'
 
 
