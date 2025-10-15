@@ -39,14 +39,44 @@ class ProjectCreateView(CreateView):
             context = super(ProjectCreateView, self).get_context_data(**kwargs)
             context['notification_count'] = latest_notification.count()
             context['latest_notification'] = latest_notification[:3]
-        context['header_text'] = "Dashboard"
+        context['header_text'] = "Project Add"
         return context
 
 
 class ProjectListView(ListView):
     model = Project
     context_object_name = "projects"
-    template_name = 'project/project_list.html'
+    template_name = "project/project_list.html"
     paginate_by = 2
 
+    def get_context_data(self, **kwargs):
+        # latest notifications
+        context = super(ProjectListView, self).get_context_data(**kwargs)
+        latest_notification = self.request.user.notifications.unread()
+        context['notification_count'] = latest_notification.count()
+        context['latest_notification'] = latest_notification[:3]
+        context['header_text'] = "Projects"
+        return context
 
+
+class ProjectNearDueDateListView(ListView):
+    model = Project
+    context_object_name = "projects"
+    template_name = "project/project_list.html"
+    paginate_by = 2
+
+    def get_queryset(self):
+        return Project.objects.all().due_in_two_days_or_less()
+
+    def get_context_data(self, **kwargs):
+        # latest notifications
+        context = super(ProjectNearDueDateListView, self).get_context_data(**kwargs)
+        latest_notification = self.request.user.notifications.unread()
+        context['notification_count'] = latest_notification.count()
+        context['latest_notification'] = latest_notification[:3]
+        context['header_text'] = "Due Projects"
+        return context
+
+
+
+    

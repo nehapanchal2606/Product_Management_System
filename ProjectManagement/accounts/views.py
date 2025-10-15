@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.views.generic import View
+from django.views.generic import View, ListView
 from projects.models import Project
 from tasks.models import Task
 from accounts.models import Profile
@@ -22,7 +22,7 @@ class DashboardView(View):
         latest_teams = Team.objects.all()
         
 
-        print("Memebers : ", latest_members)
+        # print("Memebers : ", latest_members)
         context = {}
         # if request.user.is_authenticated:
         latest_notification = request.user.notifications.unread()
@@ -37,6 +37,24 @@ class DashboardView(View):
         context['latest_members_count'] = latest_members.count()
         context['team_count'] = latest_teams.count()
         context['header_text'] = "Dashboard"
+        context['title'] = "Dashboard"
         return render(request, "accounts/dashboard.html", context)
+    
+
+class MemberListView(ListView):
+    model = Profile
+    context_object_name = "members"
+    template_name = "project/profile_list.html"
+    paginate_by = 3
+
+    def get_context_data(self, **kwargs):
+        # latest notifications
+        context = super(MemberListView, self).get_context_data(**kwargs)
+        latest_notification = self.request.user.notifications.unread()
+        context['notification_count'] = latest_notification.count()
+        context['latest_notification'] = latest_notification[:3]
+        context['header_text'] = "Member"
+        context['title'] = "All Members"
+        return context
     
 

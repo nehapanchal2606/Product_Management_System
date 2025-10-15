@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% block title %} {{title}} | {{block.super}}{% endblock %}
 {% load static %}
 {% block content %}
 
@@ -223,7 +224,7 @@
               <!-- /.card-body -->
               <div class="card-footer clearfix">
                
-                <a href="./pages/examples/tasks.html" class="btn btn-sm btn-secondary float-right">View All Tasks</a>
+                <a href="{% url 'projects:due-list' %}" class="btn btn-sm btn-secondary float-right">View All Projects</a>
               </div>
               <!-- /.card-footer -->
             </div>
@@ -298,7 +299,7 @@
                   </div>
                   <!-- /.card-body -->
                   <div class="card-footer text-center">
-                    <a href="./pages/examples/teams.html">View All Users</a>
+                    <a href="{% url 'accounts:members-list' %}">View All Users</a>
                   </div>
                   <!-- /.card-footer -->
                 </div>
@@ -347,7 +348,9 @@
                     <!--/.direct-chat-messages-->
                   </div>
                   <!-- /.card-body -->
-                  
+                  <div class="card-footer text-center">
+                    <a href="{% url 'notifications:notification-list' %}">See All Notifications</a>
+                  </div>
                   <!-- /.card-footer-->
                 </div>
                 <!--/.direct-chat -->
